@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Politician {
+  id            String    @id @default(cuid())
+  name          String
+  position      String
+  state         String
+  district      String?
+  party         String
+  nextElection  String
+  rating        String    @default("Rating Pending")
+  website       String
+  imageUrl      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  statements    Statement[]
+  bills         BillVote[]
+}
+
+model Statement {
+  id           String     @id @default(cuid())
+  date         DateTime
+  content      String
+  source       String
+  url          String
+  politicianId String
+  politician   Politician @relation(fields: [politicianId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Bill {
+  id             String     @id @default(cuid())
+  title          String
+  summary        String
+  fullText       String
+  status         String
+  introducedDate DateTime
+  analysis       String
+  votes          BillVote[]
+  coverage       Coverage[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model BillVote {
+  id           String     @id @default(cuid())
+  billId       String
+  politicianId String
+  vote         String
+  cryptoStance String
+  bill         Bill       @relation(fields: [billId], references: [id])
+  politician   Politician @relation(fields: [politicianId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Coverage {
+  id        String   @id @default(cuid())
+  billId    String
+  source    String
+  title     String
+  url       String
+  date      DateTime
+  bill      Bill     @relation(fields: [billId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

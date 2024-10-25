@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend server for Ungovernable Crypto",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm src/index.ts",
+    "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
+    "scrape": "node --loader ts-node/esm src/scraper/standWithCrypto.ts",
+    "test:db": "node --loader ts-node/esm src/testConnection.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.10.2",
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "passport": "^0.6.0",
+    "passport-twitter": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.7",
+    "@types/node": "^20.4.2",
+    "@types/passport": "^1.0.12",
+    "@types/passport-twitter": "^1.0.37",
+    "nodemon": "^3.0.1",
+    "prisma": "^5.10.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
